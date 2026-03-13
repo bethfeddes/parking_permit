@@ -1,0 +1,2 @@
+module parking_permit {
+}
