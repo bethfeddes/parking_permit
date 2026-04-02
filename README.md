@@ -1,5 +1,5 @@
 # Parking Permit App
-A parking permit app that calculates the cost of a parking permit for a school/university.
+A parking permit app that calculates the cost of a parking permit for a school/university. Takes into account permit type, vehicle type, carpool discounts, and number of months the user is paying for.
 
 ## Requirements
 - Java JDK 25.0.2
