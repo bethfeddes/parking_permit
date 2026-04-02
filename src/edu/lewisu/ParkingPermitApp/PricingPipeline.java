@@ -4,8 +4,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class PricingPipeline {
+public class PricingPipeline implements Validatable {
 
 	// Initialize list to store modifiers
 	private final List<RateModifier> modifiers = new ArrayList<>();
@@ -21,5 +20,15 @@ public class PricingPipeline {
 		}
 		return monthly;
 	}
-	
+
+    @Override
+    public  void validate() {
+        if (modifiers.isEmpty()) {
+            throw new IllegalStateException("No modifiers defined");
+        }
+        if (modifiers.contains(null)) {
+            throw new IllegalStateException("PricingPipeline has a null modifier");
+        }
+    }
+
 }

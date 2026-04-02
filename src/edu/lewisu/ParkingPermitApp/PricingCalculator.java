@@ -2,7 +2,7 @@ package edu.lewisu.ParkingPermitApp;
 
 import java.math.BigDecimal;
 
-public class PricingCalculator {
+public class PricingCalculator implements Validatable {
 
 	private BigDecimal baseMonthly;
 	private BigDecimal monthly;
@@ -42,22 +42,25 @@ public class PricingCalculator {
 
 	}
 
+    @Override
+    public void validate() {
+        if (baseMonthly == null || vehicleRate == null || monthly == null || subtotal == null || total == null) {
+            throw new IllegalStateException("calculate() must be called before retrieving results.");
+        }
+    }
+
 	public BigDecimal getBaseMonthly() {
 		return baseMonthly;
 	}
-
 	public BigDecimal getVehicleRate() {
 		return vehicleRate;
 	}
-
 	public BigDecimal getMonthly() {
 		return monthly;
 	}
-
 	public BigDecimal getSubTotal() {
 		return subtotal;
 	}
-
 	public BigDecimal getTotal() {
 		return total;
 	}

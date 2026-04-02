@@ -109,6 +109,7 @@ public class ParkingPermitApp {
 		// Calculations
 		PricingCalculator calculator = new PricingCalculator();
 		calculator.calculate(selection);
+        calculator.validate();
 			
 		// Create and display receipt
 		Receipt receipt = new Receipt();
