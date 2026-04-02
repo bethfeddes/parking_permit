@@ -1,13 +1,6 @@
 package edu.lewisu.ParkingPermitApp;
 
-// TEMPORARILY HARD-CODING MENUS FOR TIME SAKE, COME BACK AND FIX
-// ALSO FIX APPEARANCE OF RECEIPT 
-// FORMAT NICER
-// INVESTIGATE ISSUE WITH INPUT 12 MONTHS FOR "MONTHS"
-
-import java.util.EnumSet;
 import java.util.InputMismatchException;
-import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class ParkingPermitApp {
@@ -15,75 +8,62 @@ public class ParkingPermitApp {
 	public static void main(String[] args) {
 		
 		Scanner sc = new Scanner(System.in);
-		
-		
+
 		// Welcome message
+        System.out.println("  -------------------------------------");
 		System.out.println("-|* Welcome to the Parking Permit App *|-");
 		System.out.println("  -------------------------------------");
-			
-		// Permit type menu
-		System.out.println("Permit type -");
-		System.out.println("1) Resident");
-		System.out.println("2) Commuter");
-			
-		PermitType permit = null;
-		
-		// Get permit type input
-		while (permit == null) {
-			try {
-				System.out.println("Select option: ");
-				int permitChoice = sc.nextInt();
-				
-				if (permitChoice == 1) {
-					permit = PermitType.RESIDENT;
-				}
-				else if (permitChoice ==2) {
-					permit = PermitType.COMMUTER;
-				}
-				else {
-					System.out.println("Choice must be 1 or 2.");
-				}
-			}
-			catch (InputMismatchException e) {
-				System.out.println("Invalid input. Please enter a number.");
-				sc.next(); // Clears invalid input
-			}
-		}
-			
-		// Vehicle type menu
-		System.out.println("\nVehicle type -");
-		System.out.println("1) Car");
-		System.out.println("2) SUV");
-		System.out.println("3) Motorcycle");
 
-		
-		VehicleType vehicle = null;
-		
-		// Get vehicle input
-		while (vehicle == null) {
-			try {
-				System.out.println("Select option: ");
-				int vehicleChoice = sc.nextInt();
-					
-				switch (vehicleChoice) {
-					case 1:
-						vehicle = VehicleType.CAR;
-						break;
-					case 2:
-						vehicle = VehicleType.SUV;
-						break;
-					case 3:
-						vehicle = VehicleType.MOTORCYCLE;
-						break;
-					default:
-						throw new InvalidSelectionException("Invalid vehicle selection");
-					}
-			}
-			catch (InputMismatchException e) {
-				System.out.println("Invalid input. Please enter a number.");
-				sc.next(); // Clears invalid input
-			}
-		}
+        // Permit type menu
+        PermitType permit = null;
+        while (permit == null) {
+            try {
+                System.out.println("Permit type -");
+                PermitType[] permitTypes = PermitType.values();
+                for (int i = 0; i < permitTypes.length; i++) {
+                    System.out.println((i + 1) + ") " + permitTypes[i].getDisplayName());
+                }
+                System.out.println("Select option: ");
+                int permitChoice = sc.nextInt();
+
+                if (permitChoice < 1 || permitChoice > permitTypes.length) {
+                    System.out.println("Choice must be between 1 and " + permitTypes.length + ".");
+                } else {
+                    permit = permitTypes[permitChoice - 1];
+                }
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                sc.next();
+            }
+        }
+
+        // Vehicle type menu
+        VehicleType vehicle = null;
+        while (vehicle == null) {
+            try {
+                System.out.println("\nVehicle type -");
+                VehicleType[] vehicleTypes = VehicleType.values();
+                for (int i = 0; i < vehicleTypes.length; i++) {
+                    System.out.println((i + 1) + ") " + vehicleTypes[i].getDisplayName());
+                }
+                System.out.println("Select option: ");
+                int vehicleChoice = sc.nextInt();
+
+                if (vehicleChoice < 1 || vehicleChoice > vehicleTypes.length) {
+                    throw new InvalidSelectionException("Invalid vehicle selection");
+                } else {
+                    vehicle = vehicleTypes[vehicleChoice - 1];
+                }
+            }
+            catch (InputMismatchException e) {
+                System.out.println("Invalid input. Please enter a number.");
+                sc.next();
+            }
+            catch (InvalidSelectionException e) {
+                System.out.println("Choice must be between 1 and " + VehicleType.values().length + ".");
+            }
+        }
 			
 		// Carpool
 		Boolean carpool = null;
@@ -106,8 +86,7 @@ public class ParkingPermitApp {
 				System.out.println("Invalid input. Please try again.");
 			}
 		}
-		
-			
+
 		// Months
 		int months = 0;
 		while (months < 1 || months > 12) {
@@ -135,6 +114,8 @@ public class ParkingPermitApp {
 		Receipt receipt = new Receipt();
 		receipt.display(selection, calculator.getBaseMonthly(), calculator.getVehicleRate(), calculator.getMonthly(), 
 				calculator.getSubTotal(), calculator.getTotal());
-		}
+
+        sc.close();
+    }
 	
 }

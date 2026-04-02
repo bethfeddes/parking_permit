@@ -9,12 +9,13 @@ public class Receipt {
 			BigDecimal subtotal,
 			BigDecimal total) {
 
+        System.out.println("\n  --------------------------");
 		System.out.println("-|* Parking Permit Receipt *|-");
 		System.out.println("  --------------------------");
-		System.out.printf("Permit type: %s ($%.2f)%n", sel.getPermit(), baseMonthly.doubleValue());
+		System.out.printf("Permit type: %s ($%.2f)%n", sel.getPermit().getDisplayName(), baseMonthly.doubleValue());
 
 		// Print vehicle type / info
-		System.out.printf("Vehicle type: %s (%.2f%%) -> $%.2f%n",
+		System.out.printf("Vehicle type: %s (%.0f%%) -> $%.2f%n",
 				sel.getVehicle().getDisplayName(),
 				sel.getVehicle().getAdjustment().multiply(new BigDecimal("100")).doubleValue(),
 				vehicleRate.doubleValue());
@@ -23,7 +24,7 @@ public class Receipt {
 		if (sel.getCarpool()) {
 			CarpoolDiscount carpool = new CarpoolDiscount();
 			BigDecimal adjustment = carpool.getCPDiscount();
-			System.out.printf("Carpool Discount (%.2f%%): $%.2f%n",
+			System.out.printf("Carpool Discount (%.0f%%): $%.2f%n",
 					adjustment.multiply(new BigDecimal("100")).doubleValue(), monthly.doubleValue());
 		}
 
@@ -31,9 +32,9 @@ public class Receipt {
 
 		// Show campus fee amount and percentage
 		BigDecimal campusFee = total.subtract(subtotal);
-		CampusFee fee = new CampusFee();
-		System.out.printf("Campus Fee (%.2f%%): $%.2f%n",
-				fee.getFee().multiply(new BigDecimal("100")).doubleValue(), campusFee.doubleValue());
+
+		System.out.printf("Campus Fee (%.0f%%): $%.2f%n",
+				CampusFee.getFee().multiply(new BigDecimal("100")).doubleValue(), campusFee.doubleValue());
 
 		System.out.printf("Total = $%.2f%n", total);
 	}

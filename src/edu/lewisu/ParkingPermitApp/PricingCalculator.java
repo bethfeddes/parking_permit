@@ -1,7 +1,5 @@
 package edu.lewisu.ParkingPermitApp;
 
-// Used ChatGPT to help with the logic of incorporating the classes into calculation/syntax but didn't copy and paste anything.
-
 import java.math.BigDecimal;
 
 public class PricingCalculator {
@@ -29,13 +27,12 @@ public class PricingCalculator {
 		pipeline.addModifier(sel.getVehicle());
 
 		// Store vehicle rate before adding carpool
-		vehicleRate = pipeline.apply(baseMonthly);
+		vehicleRate = sel.getVehicle().apply(baseMonthly);
+        monthly = pipeline.apply(baseMonthly);
 
 		if (sel.getCarpool()) {
-			pipeline.addModifier(new CarpoolDiscount());
+            monthly = new CarpoolDiscount().apply(vehicleRate);
 		}
-
-		monthly = pipeline.apply(baseMonthly);
 
 		subtotal = monthly.multiply(new BigDecimal(sel.getMonths()));
 

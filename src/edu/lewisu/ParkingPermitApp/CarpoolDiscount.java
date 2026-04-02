@@ -2,18 +2,19 @@ package edu.lewisu.ParkingPermitApp;
 
 import java.math.BigDecimal;
 
-public class CarpoolDiscount implements RateModifier {
+public class CarpoolDiscount implements RateModifier{
 
-	private static final BigDecimal ADJUSTMENT = new BigDecimal("-0.10");
-	
-	public BigDecimal getCPDiscount() {
-		return CarpoolDiscount.ADJUSTMENT;
-	}
-	
-	@Override
-	public BigDecimal apply(BigDecimal currentMonthly) {
-		BigDecimal change = currentMonthly.multiply(ADJUSTMENT);
-		return currentMonthly.add(change);	
-	}
-	
+    private static final BigDecimal DISCOUNT = new BigDecimal("-0.1");
+
+    public BigDecimal getCPDiscount() {
+        return CarpoolDiscount.DISCOUNT;
+    }
+
+    @Override
+    public BigDecimal apply(BigDecimal currentMonthly) {
+
+        BigDecimal change = currentMonthly.multiply(DISCOUNT);
+        return currentMonthly.add(change);
+    }
+
 }

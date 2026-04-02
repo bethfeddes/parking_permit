@@ -6,7 +6,7 @@ public class CampusFee implements RateModifier{
 
 	private static final BigDecimal FEE = new BigDecimal("0.05");
 		
-	public BigDecimal getFee() {
+	public static BigDecimal getFee() {
 		return CampusFee.FEE;
 	}
 	
